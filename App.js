@@ -7,6 +7,7 @@ import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import WithFonts from "./src/hoc/WithFonts";
+import Home from './src/screens/Home';
 
 const queryClient = new QueryClient();
 
@@ -50,9 +51,7 @@ function App() {
   return (
     <AppContextProvider>
       <QueryClientProvider client={queryClient}>
-        <View style={styles.container}>
-          <StatusBar style="auto" />
-        </View>
+        <Home/>
       </QueryClientProvider>
     </AppContextProvider>
   );
