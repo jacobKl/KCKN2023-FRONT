@@ -1,12 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import AppContextProvider from './src/context/AppContextProvider';
-import Test from './src/components/Test';
-import ReactQuery from './src/components/ReactQuery';
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { StatusBar } from "expo-status-bar";
+import { useState, useEffect, useRef } from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
+import AppContextProvider from "./src/context/AppContextProvider";
+import Test from "./src/components/Test";
+import ReactQuery from "./src/components/ReactQuery";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 const queryClient = new QueryClient();
 
@@ -19,24 +19,30 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
@@ -49,10 +55,18 @@ export default function App() {
           <StatusBar style="auto" />
 
           <Text>Your expo push token: {expoPushToken}</Text>
-          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Title: {notification && notification.request.content.title} </Text>
-            <Text>Body: {notification && notification.request.content.body}</Text>
-            <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <Text>
+              Title: {notification && notification.request.content.title}{" "}
+            </Text>
+            <Text>
+              Body: {notification && notification.request.content.body}
+            </Text>
+            <Text>
+              Data:{" "}
+              {notification &&
+                JSON.stringify(notification.request.content.data)}
+            </Text>
           </View>
           <Button
             title="Press to schedule a notification"
@@ -61,7 +75,7 @@ export default function App() {
             }}
           />
 
-          <ReactQuery/>
+          <ReactQuery />
         </View>
       </QueryClientProvider>
     </AppContextProvider>
@@ -71,9 +85,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
@@ -81,8 +95,8 @@ async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "You've got mail! 📬",
-      body: 'Here is the notification body',
-      data: { data: 'goes here' },
+      body: "Here is the notification body",
+      data: { data: "goes here" },
     },
     trigger: { seconds: 2 },
   });
@@ -91,30 +105,31 @@ async function schedulePushNotification() {
 async function registerForPushNotificationsAsync() {
   let token;
 
-  if (Platform.OS === 'android') {
-    await Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
+      lightColor: "#FF231F7C",
     });
   }
 
   if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
+    if (existingStatus !== "granted") {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
+    if (finalStatus !== "granted") {
+      alert("Failed to get push token for push notification!");
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
-    alert('Must use physical device for Push Notifications');
+    alert("Must use physical device for Push Notifications");
   }
 
   return token;
