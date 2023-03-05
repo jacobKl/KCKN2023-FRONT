@@ -7,7 +7,7 @@ function Input({ placeholder, value, onChange, styleProp }) {
     <TextInput
       style={{ ...style, ...styleProp }}
       value={value}
-      onChange={onChange}
+      onChangeText={onChange}
       placeholder={placeholder}
     ></TextInput>
   );
@@ -24,4 +24,5 @@ const style = StyleSheet.create({
   fontFamily: "Gantari-Bold",
   marginBottom: 16,
   elevation: 2,
+  width: "100%"
 });

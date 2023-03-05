@@ -18,8 +18,8 @@ function App() {
   const navigationRef = createNavigationContainerRef();
 
   return (
-    <AppContextProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <AppContextProvider>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
             initialRouteName="Home"
@@ -30,8 +30,8 @@ function App() {
             <Stack.Screen name="Profile" component={Profile} />
           </Stack.Navigator>
         </NavigationContainer>
-      </QueryClientProvider>
-    </AppContextProvider>
+      </AppContextProvider>
+    </QueryClientProvider>
   );
 }
 
