@@ -1,11 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import AppContextProvider from './src/context/AppContextProvider';
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-import WithFonts from './src/hoc/WithFonts';
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { useState, useEffect, useRef } from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
+import AppContextProvider from "./src/context/AppContextProvider";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import WithFonts from "./src/hoc/WithFonts";
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,7 @@ Notifications.setNotificationHandler({
 });
 
 function App() {
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
