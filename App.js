@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "./src/screens/Home";
 import Register from "./src/screens/Register";
-import Profile from "./src/screens/Profile";
+import Profile from "./src/screens/Profile/Profile";
 
 const queryClient = new QueryClient();
 
