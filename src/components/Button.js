@@ -17,6 +17,8 @@ export const Button = ({ children, onClick, type = "primary", styleProp }) => {
   );
 };
 
+export default Button;
+
 const style = StyleSheet.create({
   default: {
     wrapper: {

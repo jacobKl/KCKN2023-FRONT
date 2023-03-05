@@ -1,18 +1,19 @@
 import React from "react";
-import { KeyboardAvoidingView, StyleSheet } from "react-native";
+import { KeyboardAvoidingView, ScrollView, StyleSheet } from "react-native";
 import theme from "../css/theme";
 
-export const Card = ({ children, styleProp }) => {
+export const Card = ({ children, styleProp, scroll }) => {
   return (
     <KeyboardAvoidingView style={{ ...style, ...styleProp }}>
-      {children}
+      {scroll ? <ScrollView>{children}</ScrollView> : children}
     </KeyboardAvoidingView>
   );
 };
 
 const style = StyleSheet.create({
   backgroundColor: theme.offWhite,
-  padding: 48,
+  paddingHorizontal: 24,
+  paddingVertical: 48,
   width: "80%",
   flexDirection: "column",
   borderRadius: 16,
@@ -21,3 +22,5 @@ const style = StyleSheet.create({
 
   elevation: 10,
 });
+
+export default Card;

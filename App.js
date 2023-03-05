@@ -8,7 +8,7 @@ import { createNavigationContainerRef } from "@react-navigation/core";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "./src/screens/Home";
-import Login from "./src/screens/Login";
+import Register from "./src/screens/Register";
 import Profile from "./src/screens/Profile";
 
 const queryClient = new QueryClient();
@@ -26,7 +26,7 @@ function App() {
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Profile" component={Profile} />
           </Stack.Navigator>
         </NavigationContainer>

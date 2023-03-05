@@ -19,8 +19,9 @@ const style = StyleSheet.create({
   paddingVertical: 8,
   paddingHorizontal: 16,
   fontSize: 16,
+  borderRadius: 4,
   backgroundColor: theme.grayLight,
   fontFamily: "Gantari-Bold",
-  marginBottom: 12,
+  marginBottom: 16,
   elevation: 2,
 });
