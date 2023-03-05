@@ -2,11 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import AppContextProvider from './src/context/AppContextProvider';
-import Test from './src/components/Test';
-import ReactQuery from './src/components/ReactQuery';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import WithFonts from './src/hoc/WithFonts';
 
 const queryClient = new QueryClient();
 
@@ -18,7 +17,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function App() {
+function App() {
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -45,28 +44,14 @@ export default function App() {
     <AppContextProvider>
       <QueryClientProvider client={queryClient}>
         <View style={styles.container}>
-          <Test />
           <StatusBar style="auto" />
-
-          <Text>Your expo push token: {expoPushToken}</Text>
-          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Title: {notification && notification.request.content.title} </Text>
-            <Text>Body: {notification && notification.request.content.body}</Text>
-            <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
-          </View>
-          <Button
-            title="Press to schedule a notification"
-            onPress={async () => {
-              await schedulePushNotification();
-            }}
-          />
-
-          <ReactQuery/>
         </View>
       </QueryClientProvider>
     </AppContextProvider>
   );
 }
+
+export default WithFonts(App);
 
 const styles = StyleSheet.create({
   container: {
