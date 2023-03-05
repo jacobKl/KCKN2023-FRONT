@@ -10,15 +10,28 @@ function BottomBar() {
   const navigation = useNavigation();
   const route = useRoute();
   const { name } = route;
-  console.log(name)
+
+  const tabs = [
+    {
+      name: "Profile",
+      icon: "user"
+    }, {
+        name: "Messages",
+        icon: "envelope"
+    }, {
+        name: "Moods",
+        icon: "brain"
+    }
+  ]
+  
   return (
     <View style={style.bar}>
-        <Pressable style={{...style.tab, ...(name === "Profile" ? style.tabActive : null)}} onPress={() => navigation.navigate("Profile")}>
-            <FontAwesome5 style={{...style.icon, ...(name === "Profile" ? style.iconActive : null) }} name="user"/>
-        </Pressable>
-        <Pressable style={{...style.tab, ...(name === "Messages" ? style.tabActive : null)}} onPress={() => navigation.navigate("Messages")}>
-            <FontAwesome5 style={{...style.icon, ...(name === "Messages" ? style.iconActive : null)}} name="envelope"/>
-        </Pressable>
+
+        { tabs.map((tab, j) => (
+            <Pressable key={j} style={{...style.tab, ...(name === tab.name ? style.tabActive : null)}} onPress={() => navigation.navigate(tab.name)}>
+                <FontAwesome5 style={{...style.icon, ...(name === tab.name ? style.iconActive : null) }} name={tab.icon}/>
+            </Pressable>
+        ))}
     </View>
   )
 }
@@ -36,7 +49,7 @@ const style = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         flex: 1,
-        width: "50%",
+        width: "33.33%",
         backgroundColor: theme.accent1,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,

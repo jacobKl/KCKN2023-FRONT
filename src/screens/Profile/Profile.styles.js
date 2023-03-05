@@ -27,5 +27,12 @@ export const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
+    },
+    userField: {
+        backgroundColor: "#ddd",
+        padding: 5,
+        borderRadius: 4,
+        marginTop: 5,
+        width: "100%"
     }
 })

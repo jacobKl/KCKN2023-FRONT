@@ -29,9 +29,36 @@ function Profile({state, dispatch}) {
     });
 
     const json = await response.json();
+    setEditing(false)
     console.log(json)
   }
 
+  const fields = [
+    {
+      field: 'name',
+      placeholder: 'Imię'
+    }, 
+    {
+      field: 'surname',
+      placeholder: 'Nazwisko'
+    },
+    {
+      field: 'username',
+      placeholder: 'Nick'
+    }, 
+    {
+      field: 'email',
+      placeholder: 'E-mail'
+    }, 
+    {
+      field: 'description',
+      placeholder: 'Opis'
+    }, 
+    {
+      field: 'age',
+      placeholder: 'Wiek'
+    }
+  ]
 
   return (
     <View style={{flex: 1, width: "100%", height: "100%", alignItems: "center"}}>
@@ -43,28 +70,12 @@ function Profile({state, dispatch}) {
             <Image source="https://picsum.photos/200/300" contentFit="cover" style={{width: "100%", height: "100%"}}/>
           </View>
 
-          { editing ? <Input value={state.user.name} onChange={(text) => changeUserField('name', text)} style={{width: "100%"}}/> : <Text size="lg">
-            {state.user.name}
-          </Text>}
+          { fields.map((field, j) => (
+            editing ? <Input key={j} value={state.user[field.field]} placeholder={field.placeholder} onChange={(text) => changeUserField(field.field, text)} style={{width: "100%"}}/> : <Text style={styles.userField} key={j}>
+              {state.user[field.field]}
+            </Text>
+          ))}
 
-          { editing ? <Input value={state.user.surname} onChange={(text) => changeUserField('surname', text)} style={{width: "100%"}}/> : <Text size="lg">
-            {state.user.surname}
-          </Text>}          
-
-          { editing ? <Input value={state.user.username} onChange={(text) => changeUserField('username', text)} style={{width: "100%"}}/> : <Text>
-            @{state.user.username}
-          </Text>}
-          
-          { editing ? <Input value={state.user.email} onChange={(text) => changeUserField('email', text)}/> : <Text>
-            {state.user.email}
-          </Text>}
-          
-          {
-            editing ? <Input value={state.user.description} onChange={(text) => changeUserField('description', text)} numberOfLines={4} multiline={true}/> : <Text>
-              {state.user.description}
-            </Text> 
-          }
-          <Checkbox isChecked={state.user.dark_mode} onValueChange={value => changeUserField('dark_mode', value)} label={"Darkmode"} />
           { editing ? <Button onClick={postUserData}>Zapisz</Button> : null}
         </ScrollView> : <Text>Loading...</Text>}
         <BottomBar/>
