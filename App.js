@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/screens/Home";
 import Register from "./src/screens/Register";
 import Profile from "./src/screens/Profile/Profile";
+import Messages from "./src/screens/Messages";
 
 const queryClient = new QueryClient();
 
@@ -22,12 +23,13 @@ function App() {
       <AppContextProvider>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
-            initialRouteName="Home"
+            initialRouteName="Profile"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="Messages" component={Messages} />
           </Stack.Navigator>
         </NavigationContainer>
       </AppContextProvider>

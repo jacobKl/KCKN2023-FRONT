@@ -2,13 +2,15 @@ import React from "react";
 import { StyleSheet, TextInput } from "react-native";
 import theme from "../css/theme";
 
-function Input({ placeholder, value, onChange, styleProp }) {
+function Input({ placeholder, value, onChange, styleProp, multiline = false, numberOfLines = 1 }) {
   return (
     <TextInput
       style={{ ...style, ...styleProp }}
       value={value}
       onChangeText={onChange}
       placeholder={placeholder}
+      multiline={multiline}
+      numberOfLines={numberOfLines}
     ></TextInput>
   );
 }
