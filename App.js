@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
@@ -6,7 +7,8 @@ import Test from "./src/components/Test";
 import ReactQuery from "./src/components/ReactQuery";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
+import React from "react";
 
 const queryClient = new QueryClient();
 
