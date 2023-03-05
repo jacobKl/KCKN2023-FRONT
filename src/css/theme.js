@@ -7,6 +7,8 @@ export const theme = {
   base2: "#6c5254ff",
   base1: "#5c454dff",
   offWhite: "#f5f5f5",
+  grayLight: "#d9dddc",
+  grayMid: "#999DA0",
 };
 
 export default theme;
