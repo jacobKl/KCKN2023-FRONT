@@ -5,9 +5,9 @@ import Text from './../components/Text';
 
 function Login() {
   return (
-    <View style={{flex: 1}}>
+    <>
         <Text>Profile screen</Text>
-    </View>
+    </>
   )
 }
 

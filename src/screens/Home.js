@@ -8,11 +8,11 @@ import WithLayout from "../hoc/WithLayout";
 function Home() {
 
   return (
-    <View style={{flex: 1}}>
+    <>
       <Image source={image} contentFit="cover" style={{flex: 1, height: "100%", width: "100%"}}/>
       <Link to={{screen: 'Login'}}>Login</Link>
       <Link to={{screen: 'Profile'}}>Profile</Link>
-    </View>
+    </>
   );
 }
 
