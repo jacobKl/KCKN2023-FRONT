@@ -31,6 +31,7 @@ function Home() {
       <Card
         styleProp={{
           justifyContent: "space-between",
+          height: "100%",
           maxHeight: 450,
         }}
       >

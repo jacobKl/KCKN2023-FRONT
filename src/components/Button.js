@@ -25,6 +25,7 @@ const style = StyleSheet.create({
       borderRadius: 4,
       marginBottom: 16,
       elevation: 2,
+      alignItems: "center",
     },
     text: {
       fontFamily: "Gantari-Bold",
