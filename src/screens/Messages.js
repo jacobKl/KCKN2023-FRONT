@@ -10,6 +10,7 @@ import { ScrollView, View } from "react-native";
 import Header from "../components/Header";
 import useScreenSize from "../hooks/useScreenSize";
 import Card from "../components/Card";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 function Messages({ state }) {
   const queryClient = useQueryClient();
@@ -104,7 +105,7 @@ function Messages({ state }) {
             styleProp={{
               position: "absolute",
               flexDirection: "column",
-              justifyContent: "flex-start",
+              justifyContent: "space-between",
               width: "90%",
               height: "90%",
               elevation: 1000,
@@ -117,63 +118,112 @@ function Messages({ state }) {
               ],
             }}
           >
-            {messages.map((message) => {
-              if (message.type === "question") {
-                return (
-                  <React.Fragment key={message.id}>
-                    <Text
+            <View
+              style={{
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              {messages.map((message) => {
+                if (message.type === "question") {
+                  return (
+                    <React.Fragment key={message.id}>
+                      <Text
+                        style={{
+                          alignSelf: "center",
+                          textAlign: "center",
+                          marginBottom: 16,
+                        }}
+                        type="header"
+                      >
+                        Wasze pytanie na dziś!
+                      </Text>
+                      <Text
+                        size="lg"
+                        type="header"
+                        style={{
+                          alignSelf: "center",
+                          textAlign: "center",
+                          marginBottom: 32,
+                        }}
+                      >
+                        {message.text}
+                      </Text>
+                    </React.Fragment>
+                  );
+                } else {
+                  return (
+                    <View
+                      key={message.id}
                       style={{
-                        alignSelf: "center",
-                        textAlign: "center",
+                        paddingHorizontal: 32,
+                        paddingVertical: 16,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: message.from
+                          ? theme.accent1
+                          : theme.base1,
+                        alignSelf: message.from ? "flex-end" : "flex-start",
+                        elevation: 10,
                         marginBottom: 16,
-                      }}
-                      type="header"
-                    >
-                      Wasze pytanie na dziś!
-                    </Text>
-                    <Text
-                      size="lg"
-                      type="header"
-                      style={{
-                        alignSelf: "center",
-                        textAlign: "center",
-                        marginBottom: 32,
+                        borderRadius: 100,
                       }}
                     >
-                      {message.text}
-                    </Text>
-                  </React.Fragment>
-                );
-              } else {
-                return (
-                  <View
-                    key={message.id}
-                    style={{
-                      paddingHorizontal: 32,
-                      paddingVertical: 16,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: message.from
-                        ? theme.accent1
-                        : theme.base1,
-                      alignSelf: message.from ? "flex-end" : "flex-start",
-                      elevation: 10,
-                      marginBottom: 16,
-                      borderRadius: 100,
-                    }}
-                  >
-                    <Text
-                      type="bold"
-                      style={{
-                        color: message.from ? theme.base1 : theme.accent1,
-                      }}
-                    >
-                      {message.text}
-                    </Text>
-                  </View>
-                );
-              }
-            })}
+                      <Text
+                        type="bold"
+                        style={{
+                          color: message.from ? theme.base1 : theme.accent1,
+                        }}
+                      >
+                        {message.text}
+                      </Text>
+                    </View>
+                  );
+                }
+              })}
+            </View>
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: "80%",
+                  height: 60,
+                  borderRadius: 30,
+                  borderWidth: 2,
+                  borderColor: theme.accent1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingHorizontal: 32,
+                  paddingVertical: 16,
+                  marginRight: 16,
+                }}
+              >
+                <Text>Wpisz wiadomość...</Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: theme.accent1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: 60,
+                  width: 60,
+                  borderRadius: 30,
+                }}
+              >
+                <FontAwesome5
+                  style={{ color: theme.offWhite, fontSize: 25 }}
+                  name="paper-plane"
+                />
+              </View>
+            </View>
           </Card>
         </View>
       ) : (
