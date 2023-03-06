@@ -4,11 +4,22 @@ import Text from './../components/Text';
 import theme from '../css/theme';
 import moment from 'moment';
 
+const moodRenderer = (mood) => {
+    if (mood > 0 && mood < 50)
+        return <Text>😢 ({mood})</Text>;
+    else if (mood >= 50 && mood < 100)
+        return <Text>😔 ({mood})</Text>;
+    else if (mood >= 100 && mood < 150)
+        return <Text>😊 ({mood})</Text>; 
+    else if (mood >= 150 && mood <= 200)
+        return <Text>😍 ({mood})</Text>;
+}
+
 function Mood({thankful_for, mood, timestamp}) {
   return (
     <View style={style.row}>
         <Text style={style.date}>{moment.unix(timestamp).format("MM/DD/YYYY")}</Text>
-        <Text>Samopoczucie: {mood}</Text>
+        <Text>Samopoczucie: {moodRenderer(mood)}</Text>
         <Text>{thankful_for}</Text>
     </View>
   )
