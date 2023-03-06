@@ -88,8 +88,8 @@ function Moods({state, dispatch}) {
   ) : (
     <>
       <View style={{ flex: 1, width: "80%", justifyContent: "space-between", alignItems: "center" }}>
-        <View style={{ justifyContent: "space", alignItems: "center", width: "100%" }}>
-          {!todaysMoodAsked ? (
+        <View style={{ justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+        {!todaysMoodAsked && (
             <>
               {image ? <Image source={{ uri: `data:image/jpeg;base64,${image}` }} style={style.image} /> : null}
               <Text>Pokaz nam jak się dzisiaj czujesz!</Text>
@@ -101,9 +101,8 @@ function Moods({state, dispatch}) {
                 Zapisz
               </Button>
             </>
-          ) : null}
-
-          {moods ? (
+          ) }
+          {moods && (
             <>
               <Text size="lg" style={{ marginBottom: 10 }}>
                 Wdzięczności
@@ -114,7 +113,8 @@ function Moods({state, dispatch}) {
                 ))}
               </ScrollView>
             </>
-          ) : null}
+          )}
+          
         </View>
       </View>
       <BottomBar />

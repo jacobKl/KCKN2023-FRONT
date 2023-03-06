@@ -4,7 +4,7 @@ import Text from './../components/Text';
 import theme from '../css/theme';
 
 const moodRenderer = (mood) => {
-    if (mood > 0 && mood < 50)
+    if (mood >= 0 && mood < 50)
         return <Text>😢 ({mood})</Text>;
     else if (mood >= 50 && mood < 100)
         return <Text>😔 ({mood})</Text>;
