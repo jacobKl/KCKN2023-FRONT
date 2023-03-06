@@ -27,6 +27,8 @@ function Moods({state, dispatch}) {
             setTodaysMoodAsked(true);
             return false;
           }
+
+          return true;
         });
         setMoods(json.data);
       }
@@ -60,7 +62,6 @@ function Moods({state, dispatch}) {
 
   const startCam = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
-
     if (status == "granted") setCam(true);
   };
 
@@ -85,7 +86,7 @@ function Moods({state, dispatch}) {
     <Camera ref={camRef} type={Camera.Constants.Type.front} style={{ flex: 1, width: "100%" }}>
       <Pressable onPress={takePicture} style={style.makePhoto}></Pressable>
     </Camera>
-  ) : (
+  ) : 
     <>
       <View style={{ flex: 1, width: "80%", justifyContent: "space-between", alignItems: "center" }}>
         <View style={{ justifyContent: "space-between", alignItems: "center", width: "100%" }}>
@@ -118,8 +119,7 @@ function Moods({state, dispatch}) {
         </View>
       </View>
       <BottomBar />
-    </>
-  );
+    </>;
 }
 
 const style = StyleSheet.create({

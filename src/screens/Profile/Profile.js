@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pressable, View, ScrollView } from 'react-native';
 import WithLayout from "../../hoc/WithLayout";
 import WithContext from "../../hoc/WithContext";
@@ -10,10 +10,10 @@ import BottomBar from '../../components/BottomBar';
 import { Image } from "expo-image";
 import { Button } from '../../components/Button';
 import apiRoute from '../../api/apiConfig';
+import InterestsPicker from '../../components/InterestsPicker';
 
 function Profile({state, dispatch}) {
   const [ editing, setEditing ] = useState(false);
-
   const changeUserField = (field, value) => {
     dispatch({type: 'EDIT_USER_FIELD', payload: { field: field, value: value }});
   }
@@ -28,7 +28,6 @@ function Profile({state, dispatch}) {
     const json = await response.json();
     setEditing(false)
   }
-  
   const fields = [
     {
       field: 'first_name',
@@ -55,7 +54,6 @@ function Profile({state, dispatch}) {
       placeholder: 'Wiek'
     }
   ]
-
   return (
     <View style={{flex: 1, width: "100%", height: "100%", alignItems: "center"}}>
       { !editing ? <Pressable onPress={() => setEditing(!editing)} style={styles.editPressable}>
@@ -65,12 +63,13 @@ function Profile({state, dispatch}) {
           <View style={styles.avatar}>
             <Image source="https://picsum.photos/200/300" contentFit="cover" style={{width: "100%", height: "100%"}}/>
           </View>
-
           { fields.map((field, j) => (
             editing ? <Input key={j} value={state.user[field.field]} placeholder={field.placeholder} onChange={(text) => changeUserField(field.field, text)} style={{width: "100%"}}/> : <Text key={j} style={styles.userField}>{field.placeholder}: <Text></Text>
               {state.user[field.field]}
             </Text>
           ))}
+
+          { editing ? <InterestsPicker/> : (state.user.user_interests ? state.user.user_interests.map((single, j) => (<Text style={{color: "black"}} key={j}>{single}</Text>)) : null)}
 
           { editing ? <Button onClick={postUserData}>Zapisz</Button> : null}
         </ScrollView> : <Text>Loading...</Text>}
