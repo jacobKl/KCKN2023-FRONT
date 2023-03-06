@@ -2,19 +2,19 @@ const reducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'SET_USER': 
+    case "SET_USER":
       return {
         ...state,
-        user: payload
-      }
-    case 'EDIT_USER_FIELD': 
+        ...payload,
+      };
+    case "EDIT_USER_FIELD":
       return {
-        ...state, 
+        ...state,
         user: {
           ...state.user,
-          [payload.field]: payload.value
-        }
-      }
+          [payload.field]: payload.value,
+        },
+      };
     default:
       console.log(new Error("Context: Action type not provided."));
       return state;

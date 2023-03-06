@@ -9,10 +9,11 @@ import theme from "../css/theme";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import useScreenSize from "../hooks/useScreenSize";
+import apiRoute from "../api/apiConfig";
+import WithContext from "../hoc/WithContext";
 
-const handleRegister = () => {};
-
-function Register({ navigation }) {
+function Register({ navigation, state, dispatch }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +21,9 @@ function Register({ navigation }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
+  const [fetching, setFetching] = useState(false);
+
+  const { screenHeight } = useScreenSize();
 
   const fields = useMemo(
     () => [
@@ -69,6 +73,38 @@ function Register({ navigation }) {
     [username, email, password, firstName, lastName, age]
   );
 
+  const handleRegister = () => {
+    if (!fetching) return;
+
+    setFetching(true);
+
+    fetch(apiRoute("/user"), {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+        age,
+      }),
+      headers: {
+        Accept: "application/json",
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setFetching(false);
+        dispatch({
+          type: "SET_USER",
+          payload: { user: res.data, userToken: res.data.token },
+        });
+        console.info(JSON.stringify(state, null, 2));
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <>
       <Image
@@ -86,8 +122,8 @@ function Register({ navigation }) {
         scroll
         styleProp={{
           justifyContent: "space-between",
-          height: "100%",
-          maxHeight: 450,
+          maxHeight: 0.8 * screenHeight,
+          minHeight: 400,
         }}
       >
         <Header style={{ color: theme.base1 }}>Rejestracja</Header>
@@ -123,4 +159,4 @@ function Register({ navigation }) {
   );
 }
 
-export default WithLayout(Register);
+export default WithContext(WithLayout(Register));

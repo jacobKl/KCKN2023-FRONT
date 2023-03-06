@@ -23,7 +23,7 @@ function App() {
       <AppContextProvider>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
-            initialRouteName="Profile"
+            initialRouteName="Home"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Home" component={Home} />

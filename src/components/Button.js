@@ -4,9 +4,16 @@ import Text from "./Text";
 
 import theme from "../css/theme";
 
-export const Button = ({ children, onClick, type = "primary", styleProp }) => {
+export const Button = ({
+  children,
+  onClick,
+  type = "primary",
+  styleProp,
+  disabled,
+}) => {
   return (
     <Pressable
+      disabled={disabled}
       style={{ ...style.default.wrapper, ...style[type].wrapper, ...styleProp }}
       onTouchEnd={onClick}
     >
