@@ -5,7 +5,16 @@ import theme from "../css/theme";
 export const Card = ({ children, styleProp, scroll }) => {
   return (
     <KeyboardAvoidingView style={{ ...style, ...styleProp }}>
-      {scroll ? <ScrollView>{children}</ScrollView> : children}
+      {scroll ? (
+        <ScrollView
+          style={{ width: "100%" }}
+          contentContainerStyle={{ alignItems: "center" }}
+        >
+          {children}
+        </ScrollView>
+      ) : (
+        children
+      )}
     </KeyboardAvoidingView>
   );
 };
