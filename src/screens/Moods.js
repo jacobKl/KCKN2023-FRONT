@@ -10,11 +10,13 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Input from "../components/Input";
 import Mood from "../components/Mood";
 import moment from "moment";
+import WithContext from "../hoc/WithContext";
+import apiRoute from "../api/apiConfig";
 
-function Moods() {
+function Moods({state, dispatch}) {
   useEffect(() => {
     const getMoods = async () => {
-      const result = await fetch("http://10.0.5.45:8000/mood/1");
+      const result = await fetch(apiRoute('/mood/' + state.user.id));
       const json = await result.json();
       if (json.success) {
         const todays = moment().format("D");
@@ -33,20 +35,20 @@ function Moods() {
   }, []);
 
   const postMood = async () => {
-    const result = await fetch("http://10.0.5.45:8000/mood", {
+    const result = await fetch(apiRoute('/mood'), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: 1,
+        user_id: state.user.id,
         image: image,
         thankful_for: thankful,
       }),
     });
-
     const response = await result.json();
-    setMoodCount(response.mood);
+    setMoods([...moods, response.data]);
+    setTodaysMoodAsked(true);
   };
 
   const [moods, setMoods] = useState([]);
@@ -76,7 +78,6 @@ function Moods() {
   };
 
   const saveMood = () => {
-    console.log("save");
     postMood();
   };
 
@@ -97,7 +98,7 @@ function Moods() {
               </Button>
               <Input multiline={true} placeholder="Wdzięczność" numberOfLines={4} value={thankful} onChange={thankfulOnChange} styleProp={style.grateful} />
               <Button onClick={saveMood} styleProp={{ width: "100%" }}>
-                Zapisz samopoczucie i wdzięczność
+                Zapisz
               </Button>
             </>
           ) : null}
@@ -148,4 +149,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default WithLayout(Moods);
+export default WithLayout(WithContext(Moods));

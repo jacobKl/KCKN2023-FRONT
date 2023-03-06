@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image } from "expo-image";
 import Card from "../components/Card";
 import Button from "../components/Button";
@@ -11,6 +11,7 @@ import image from "./../../assets/splash.jpeg";
 import useScreenSize from "../hooks/useScreenSize";
 import { apiRoute } from "../api/apiConfig";
 import WithContext from "../hoc/WithContext";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation, state, dispatch }) => {
   const { screenHeight } = useScreenSize();
@@ -37,11 +38,15 @@ const Login = ({ navigation, state, dispatch }) => {
       .then((res) => res.json())
       .then((res) => {
         setFetching(false);
-        dispatch({
-          type: "SET_USER",
-          payload: { user: res.data, userToken: res.data.token },
-        });
-        console.info(JSON.stringify(state, null, 2));
+        console.log(res)
+        if (res.success) {
+          navigation.navigate('Profile');
+          dispatch({
+            type: "SET_USER",
+            payload: res.data,
+          });
+          AsyncStorage.setItem('userToken', res.data.token);
+        }
       })
       .catch((err) => console.error(err));
   };

@@ -1,11 +1,10 @@
 const reducer = (state, action) => {
   const { type, payload } = action;
-
   switch (type) {
     case "SET_USER":
       return {
         ...state,
-        ...payload,
+        user: payload,
       };
     case "EDIT_USER_FIELD":
       return {

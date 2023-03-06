@@ -7,9 +7,9 @@ import { styles } from './Profile.styles';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Input from '../../components/Input';
 import BottomBar from '../../components/BottomBar';
-import Checkbox from '../../components/Checkbox';
 import { Image } from "expo-image";
 import { Button } from '../../components/Button';
+import apiRoute from '../../api/apiConfig';
 
 function Profile({state, dispatch}) {
   const [ editing, setEditing ] = useState(false);
@@ -17,29 +17,25 @@ function Profile({state, dispatch}) {
   const changeUserField = (field, value) => {
     dispatch({type: 'EDIT_USER_FIELD', payload: { field: field, value: value }});
   }
-
   const postUserData = async () => {
-
-    const response = await fetch('http://10.0.5.76:3003/user', {
+    const response = await fetch(apiRoute('/user/' + state.user.id), {
       method: "PUT",
-      body: JSON.stringify(state.user), 
-      header: {
-        'Content-Type': 'application/json'
-      }
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(state.user)
     });
-
     const json = await response.json();
     setEditing(false)
-    console.log(json)
   }
-
+  
   const fields = [
     {
-      field: 'name',
+      field: 'first_name',
       placeholder: 'Imię'
     }, 
     {
-      field: 'surname',
+      field: 'last_name',
       placeholder: 'Nazwisko'
     },
     {
@@ -71,7 +67,7 @@ function Profile({state, dispatch}) {
           </View>
 
           { fields.map((field, j) => (
-            editing ? <Input key={j} value={state.user[field.field]} placeholder={field.placeholder} onChange={(text) => changeUserField(field.field, text)} style={{width: "100%"}}/> : <Text style={styles.userField} key={j}>
+            editing ? <Input key={j} value={state.user[field.field]} placeholder={field.placeholder} onChange={(text) => changeUserField(field.field, text)} style={{width: "100%"}}/> : <Text key={j} style={styles.userField}>{field.placeholder}: <Text></Text>
               {state.user[field.field]}
             </Text>
           ))}

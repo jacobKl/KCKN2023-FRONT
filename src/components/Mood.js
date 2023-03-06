@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native';
 import Text from './../components/Text';
 import theme from '../css/theme';
-import moment from 'moment';
 
 const moodRenderer = (mood) => {
     if (mood > 0 && mood < 50)
@@ -18,7 +17,7 @@ const moodRenderer = (mood) => {
 function Mood({thankful_for, mood, timestamp}) {
   return (
     <View style={style.row}>
-        <Text style={style.date}>{moment.unix(timestamp).format("MM/DD/YYYY")}</Text>
+        <Text style={style.date}>{timestamp}</Text>
         <Text>Samopoczucie: {moodRenderer(mood)}</Text>
         <Text>{thankful_for}</Text>
     </View>
