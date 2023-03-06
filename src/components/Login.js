@@ -23,7 +23,6 @@ const Login = ({ navigation, state, dispatch }) => {
     if (fetching) return;
 
     setFetching(true);
-
     fetch(apiRoute("/login"), {
       method: "POST",
       body: JSON.stringify({
@@ -85,7 +84,7 @@ const Login = ({ navigation, state, dispatch }) => {
           <Button
             onClick={handleLogin}
             styleProp={StyleSheet.create({ width: "100%" })}
-            disabled={!fetching}
+            disabled={fetching}
           >
             <Text type="bold">Zaloguj się</Text>
           </Button>

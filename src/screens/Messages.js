@@ -48,7 +48,7 @@ function Messages({ state }) {
     return <Text style={{ color: theme.base1 }}>Ładowanie...</Text>;
 
   if (error) return <Text style={{ color: theme.base1 }}>Wystąpił błąd!</Text>;
-
+console.log(data)
   return (
     <>
       <View
@@ -67,7 +67,7 @@ function Messages({ state }) {
           height: "84%",
         }}
       >
-        {data.map((conversation, index) => (
+        {data.length ? data.map((conversation, index) => (
           <Conversation
             index={index}
             key={conversation.id}
@@ -75,8 +75,7 @@ function Messages({ state }) {
             participantId={conversation.id}
             messages={conversation.messages}
           />
-          // <Text key={conversation.id}>chuj</Text>
-        ))}
+        )) : null}
       </ScrollView>
       <View
         style={{ width: "100%", height: "8%", backgroundColor: theme.accent1 }}

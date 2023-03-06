@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Pressable, StyleSheet, ScrollView } from "react-native";
+import { View, Pressable, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import BottomBar from "../components/BottomBar";
 import Text from "./../components/Text";
 import WithLayout from "../hoc/WithLayout";
@@ -12,6 +12,7 @@ import Mood from "../components/Mood";
 import moment from "moment";
 import WithContext from "../hoc/WithContext";
 import apiRoute from "../api/apiConfig";
+import theme from "../css/theme";
 
 function Moods({state, dispatch}) {
   useEffect(() => {
@@ -37,6 +38,7 @@ function Moods({state, dispatch}) {
   }, []);
 
   const postMood = async () => {
+    setFetching(true);
     const result = await fetch(apiRoute('/mood'), {
       method: "POST",
       headers: {
@@ -51,8 +53,10 @@ function Moods({state, dispatch}) {
     const response = await result.json();
     setMoods([...moods, response.data]);
     setTodaysMoodAsked(true);
+    setFetching(false);
   };
 
+  const [fetching, setFetching] = useState(false);
   const [moods, setMoods] = useState([]);
   const [cam, setCam] = useState(false);
   const camRef = useRef();
@@ -82,7 +86,7 @@ function Moods({state, dispatch}) {
     postMood();
   };
 
-  return cam ? (
+  return fetching ? <ActivityIndicator size="large" color={theme.accent1} /> : (cam ? (
     <Camera ref={camRef} type={Camera.Constants.Type.front} style={{ flex: 1, width: "100%" }}>
       <Pressable onPress={takePicture} style={style.makePhoto}></Pressable>
     </Camera>
@@ -119,7 +123,7 @@ function Moods({state, dispatch}) {
         </View>
       </View>
       <BottomBar />
-    </>;
+    </>);
 }
 
 const style = StyleSheet.create({

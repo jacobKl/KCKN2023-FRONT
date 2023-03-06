@@ -12,8 +12,11 @@ import { Button } from '../../components/Button';
 import apiRoute from '../../api/apiConfig';
 import InterestsPicker from '../../components/InterestsPicker';
 import theme from '../../css/theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/core';
 
 function Profile({state, dispatch}) {
+  const navigation = useNavigation();
   const [ editing, setEditing ] = useState(false);
   const changeUserField = (field, value) => {
     dispatch({type: 'EDIT_USER_FIELD', payload: { field: field, value: value }});
@@ -54,7 +57,14 @@ function Profile({state, dispatch}) {
       field: 'age',
       placeholder: 'Wiek'
     }
-  ]
+  ];
+
+  const logout = () => {
+    AsyncStorage.removeItem('UserToken');
+    navigation.navigate("Home");
+    dispatch({type: 'SET_USER', payload: []})
+  }
+
   return (
     <View style={{flex: 1, width: "100%", height: "100%", alignItems: "center"}}>
       { !editing ? <Pressable onPress={() => setEditing(!editing)} style={styles.editPressable}>
@@ -73,6 +83,8 @@ function Profile({state, dispatch}) {
           { editing ? <InterestsPicker/> : (state.user.user_interests ? <View style={{marginTop: 5}}><Text type='bold' style={{color: 'black'}}>Zainteresowania:</Text><View style={{justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap'}}>{state.user.user_interests.map((single, j) => (<Text type='bold' style={{color: "black", backgroundColor: theme.accent1, paddingVertical: 5, paddingHorizontal: 10, margin: 5, borderRadius: 15}} key={j}>{single}</Text>))}</View></View> : null)}
 
           { editing ? <Button onClick={postUserData}>Zapisz</Button> : null}
+
+          <Button onClick={logout} style={{marginTop: 5}}>Wyloguj się</Button>
         </ScrollView> : <Text>Loading...</Text>}
         <BottomBar/>
     </View>
