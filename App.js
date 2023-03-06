@@ -11,6 +11,7 @@ import Home from "./src/screens/Home";
 import Register from "./src/screens/Register";
 import Profile from "./src/screens/Profile/Profile";
 import Messages from "./src/screens/Messages";
+import Moods from "./src/screens/Moods";
 
 const queryClient = new QueryClient();
 
@@ -23,13 +24,14 @@ function App() {
       <AppContextProvider>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{ headerShown: false }}
+            initialRouteName="Profile"
+            screenOptions={{ headerShown: false, animation: "none" }}
           >
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="Messages" component={Messages} />
+            <Stack.Screen name="Moods" component={Moods} />
           </Stack.Navigator>
         </NavigationContainer>
       </AppContextProvider>
