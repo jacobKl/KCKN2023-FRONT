@@ -25,7 +25,7 @@ function Messages({ state }) {
     if (!response.ok) {
       throw new Error("Network response not ok");
     }
-    return response.json();
+    return await response.json();
   };
 
   const { isLoading, error, data, isFetching } = useQuery(
@@ -48,7 +48,7 @@ function Messages({ state }) {
     return <Text style={{ color: theme.base1 }}>Ładowanie...</Text>;
 
   if (error) return <Text style={{ color: theme.base1 }}>Wystąpił błąd!</Text>;
-console.log(data)
+
   return (
     <>
       <View
@@ -67,7 +67,7 @@ console.log(data)
           height: "84%",
         }}
       >
-        {data.length ? data.map((conversation, index) => (
+        {data.data.map((conversation, index) => (
           <Conversation
             index={index}
             key={conversation.id}
@@ -75,7 +75,7 @@ console.log(data)
             participantId={conversation.id}
             messages={conversation.messages}
           />
-        )) : null}
+        ))}
       </ScrollView>
       <View
         style={{ width: "100%", height: "8%", backgroundColor: theme.accent1 }}
