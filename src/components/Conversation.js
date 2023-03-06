@@ -8,7 +8,13 @@ import useScreenSize from "../hooks/useScreenSize";
 import apiRoute from "../api/apiConfig";
 import moment from "moment";
 
-export const Conversation = ({ messages, ownerId, participantId, index }) => {
+export const Conversation = ({
+  messages,
+  ownerId,
+  participantId,
+  index,
+  openChat,
+}) => {
   const { screenWidth } = useScreenSize();
   const [participant, setParticipant] = useState();
 
@@ -33,7 +39,10 @@ export const Conversation = ({ messages, ownerId, participantId, index }) => {
   );
 
   return (
-    <Pressable style={{ width: screenWidth }}>
+    <Pressable
+      style={{ width: screenWidth }}
+      onPress={() => openChat(messages, ownerId, participantId)}
+    >
       <View style={{ ...style.wrapper, borderTopWidth: index === 0 ? 1 : 0 }}>
         {participant && (
           <>
