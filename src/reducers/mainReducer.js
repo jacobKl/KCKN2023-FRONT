@@ -14,6 +14,19 @@ const reducer = (state, action) => {
           [payload.field]: payload.value,
         },
       };
+    case 'SET_INTERESTS': 
+      return {
+        ...state, 
+        interests: payload
+      }
+    case 'SET_USER_INTERESTS':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          user_interests: payload
+        }
+      }
     default:
       console.log(new Error("Context: Action type not provided."));
       return state;
@@ -22,6 +35,9 @@ const reducer = (state, action) => {
 
 export const initialState = {
   hello: "Hello from ContextProvider!",
+  user: {
+    user_interests: []
+  }
 };
 
 export default reducer;
