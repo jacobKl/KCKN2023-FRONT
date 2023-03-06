@@ -20,8 +20,8 @@ function App() {
   const navigationRef = createNavigationContainerRef();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppContextProvider>
+    <AppContextProvider>
+      <QueryClientProvider client={queryClient}>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
             initialRouteName="Home"
@@ -34,8 +34,8 @@ function App() {
             <Stack.Screen name="Moods" component={Moods} />
           </Stack.Navigator>
         </NavigationContainer>
-      </AppContextProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </AppContextProvider>
   );
 }
 

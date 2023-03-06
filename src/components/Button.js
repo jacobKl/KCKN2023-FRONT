@@ -15,7 +15,7 @@ export const Button = ({
     <Pressable
       disabled={disabled}
       style={{ ...style.default.wrapper, ...style[type].wrapper, ...styleProp }}
-      onTouchEnd={onClick}
+      onPress={onClick}
     >
       <Text style={{ ...style.default.text, ...style[type].text }}>
         {children}
