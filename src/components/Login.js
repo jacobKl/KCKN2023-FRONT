@@ -37,6 +37,7 @@ const Login = ({ navigation, state, dispatch }) => {
       .then((res) => res.json())
       .then((res) => {
         setFetching(false);
+        console.log(res)
         if (res.success) {
           navigation.navigate('Profile');
           dispatch({

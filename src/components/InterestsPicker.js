@@ -9,9 +9,11 @@ function InterestsPicker({ state, dispatch }) {
   const [search, setSearch] = useState('');
   
   const onTextInput = (text) => {
-    if(text == '') return;
+    if(text == '') {
+        setSearch(text);
+        return false;
+    }
     const matches = state.interests.filter(interest => interest.includes(text));
-    setSearch(text);
     setHints(matches);
   };
 

@@ -74,7 +74,7 @@ function Register({ navigation, state, dispatch }) {
   );
 
   const handleRegister = () => {
-    if (!fetching) return;
+    if (fetching) return;
 
     setFetching(true);
 

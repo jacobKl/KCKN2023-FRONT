@@ -13,6 +13,8 @@ import moment from "moment";
 import WithContext from "../hoc/WithContext";
 import apiRoute from "../api/apiConfig";
 import theme from "../css/theme";
+import { BarChart } from "react-native-gifted-charts";
+import {Picker} from '@react-native-picker/picker';
 
 function Moods({state, dispatch}) {
   useEffect(() => {
@@ -36,6 +38,15 @@ function Moods({state, dispatch}) {
     };
     getMoods();
   }, []);
+
+  useEffect(() => {
+    let charts = moods.map(mood => {
+        const date = moment(mood.timestamp);
+        return {value: mood.mood / 2, label: `${date.format('DD')}/${date.format('MM')}`};
+    });
+    charts = charts.splice(0 ,4).reverse();
+    setChartData(charts);
+  }, [moods])
 
   const postMood = async () => {
     setFetching(true);
@@ -63,6 +74,7 @@ function Moods({state, dispatch}) {
   const [image, setImage] = useState("");
   const [thankful, setThankful] = useState("");
   const [todaysMoodAsked, setTodaysMoodAsked] = useState(false);
+  const [chartData, setChartData] = useState([]);
 
   const startCam = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
@@ -101,6 +113,18 @@ function Moods({state, dispatch}) {
               <Button onClick={startCam} styleProp={style.cam}>
                 <FontAwesome5 name="camera" />
               </Button>
+              <Picker>
+                <Picker.Item label="1"/>
+                <Picker.Item label="2"/>
+                <Picker.Item label="3"/>
+                <Picker.Item label="4"/>
+                <Picker.Item label="5"/>
+                <Picker.Item label="6"/>
+                <Picker.Item label="7"/>
+                <Picker.Item label="8"/>
+                <Picker.Item label="9"/>
+                <Picker.Item label="10"/>
+              </Picker>
               <Input multiline={true} placeholder="Wdzięczność" numberOfLines={4} value={thankful} onChange={thankfulOnChange} styleProp={style.grateful} />
               <Button onClick={saveMood} styleProp={{ width: "100%" }}>
                 Zapisz
@@ -112,7 +136,21 @@ function Moods({state, dispatch}) {
               <Text size="lg" style={{ marginBottom: 10 }}>
                 Wdzięczności
               </Text>
-              <ScrollView style={{ width: "100%", height: "100%", overflow: "hidden" }}>
+              {(todaysMoodAsked && moods.length > 1)  ? <View style={{width: "100%", height: 300}}>
+                  <BarChart
+                      vertical
+                      barWidth={35}
+                      noOfSections={3}
+                      barBorderRadius={4}
+                      frontColor="lightgray"
+                      data={chartData}
+                      yAxisThickness={3}
+                      xAxisThickness={3}
+                      maxValue={100}
+                      labelWidth={35}
+                  />
+              </View> : null}
+              <ScrollView style={{ width: "100%", maxHeight: "100%", height: "100%", overflow: "hidden" }}>
                 {moods.map((mood) => (
                   <Mood key={mood.id} thankful_for={mood.thankful_for} mood={mood.mood} timestamp={mood.timestamp} />
                 ))}

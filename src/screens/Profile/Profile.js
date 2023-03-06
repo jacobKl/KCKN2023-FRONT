@@ -84,7 +84,7 @@ function Profile({state, dispatch}) {
 
           { editing ? <Button onClick={postUserData}>Zapisz</Button> : null}
 
-          <Button onClick={logout} style={{marginTop: 5}}>Wyloguj się</Button>
+          <Button onClick={logout} styleProp={{margin: 5}}>Wyloguj się</Button>
         </ScrollView> : <Text>Loading...</Text>}
         <BottomBar/>
     </View>
