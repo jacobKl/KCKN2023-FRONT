@@ -23,8 +23,8 @@ function InterestsPicker({ state, dispatch }) {
   }
 
   return (
-    <View style={{flex: 1, marginTop: 10, width: "100%"}}>
-      {state.user.user_interests ? state.user.user_interests.map((single,j) => <Text key={j}>{single}</Text>) : null}
+    <View style={{flex: 1, width: "100%"}}>
+      {state.user.user_interests ? <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>{state.user.user_interests.map((single, j) => (<Text type='bold' style={{color: "black", backgroundColor: theme.accent1, paddingVertical: 5, paddingHorizontal: 10, margin: 5, borderRadius: 15}} key={j}>{single}</Text>))}</View> : null}
       <TextInput style={style.input} value={search} placeholder="Zainteresowania" onChangeText={onTextInput}></TextInput>
       <ScrollView style={style.hintRow} horizontal={true}>
         {hints.map((hint, j) => (
@@ -59,7 +59,7 @@ const style = StyleSheet.create({
     fontSize: 5,
     marginBottom: 5
   },    
-  input: { paddingVertical: 8, paddingHorizontal: 16, fontSize: 16, borderRadius: 4, backgroundColor: theme.grayLight, fontFamily: "Gantari-Bold", marginBottom: 16, elevation: 2, width: "100%" },
+  input: { paddingVertical: 8, paddingHorizontal: 16, fontSize: 16, borderRadius: 4, marginTop: 10, backgroundColor: theme.grayLight, fontFamily: "Gantari-Bold", marginBottom: 16, elevation: 2, width: "100%" },
 
 });
 

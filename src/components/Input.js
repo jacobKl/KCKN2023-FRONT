@@ -6,7 +6,7 @@ function Input({ placeholder, value, onChange, styleProp, multiline = false, num
   return (
     <TextInput
       style={{ ...style, ...styleProp }}
-      value={value}
+      value={String(value)}
       onChangeText={onChange}
       placeholder={placeholder}
       multiline={multiline}

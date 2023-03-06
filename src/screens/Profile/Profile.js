@@ -11,6 +11,7 @@ import { Image } from "expo-image";
 import { Button } from '../../components/Button';
 import apiRoute from '../../api/apiConfig';
 import InterestsPicker from '../../components/InterestsPicker';
+import theme from '../../css/theme';
 
 function Profile({state, dispatch}) {
   const [ editing, setEditing ] = useState(false);
@@ -64,12 +65,12 @@ function Profile({state, dispatch}) {
             <Image source="https://picsum.photos/200/300" contentFit="cover" style={{width: "100%", height: "100%"}}/>
           </View>
           { fields.map((field, j) => (
-            editing ? <Input key={j} value={state.user[field.field]} placeholder={field.placeholder} onChange={(text) => changeUserField(field.field, text)} style={{width: "100%"}}/> : <Text key={j} style={styles.userField}>{field.placeholder}: <Text></Text>
+            editing ? <Input key={j} value={state.user[field.field]} placeholder={field.placeholder} onChange={(text) => changeUserField(field.field, text)} style={{width: "100%"}}/> : <Text type='bold' key={j} style={styles.userField}>{field.placeholder}: <Text></Text>
               {state.user[field.field]}
             </Text>
           ))}
 
-          { editing ? <InterestsPicker/> : (state.user.user_interests ? state.user.user_interests.map((single, j) => (<Text style={{color: "black"}} key={j}>{single}</Text>)) : null)}
+          { editing ? <InterestsPicker/> : (state.user.user_interests ? <View style={{marginTop: 5}}><Text type='bold' style={{color: 'black'}}>Zainteresowania:</Text><View style={{justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap'}}>{state.user.user_interests.map((single, j) => (<Text type='bold' style={{color: "black", backgroundColor: theme.accent1, paddingVertical: 5, paddingHorizontal: 10, margin: 5, borderRadius: 15}} key={j}>{single}</Text>))}</View></View> : null)}
 
           { editing ? <Button onClick={postUserData}>Zapisz</Button> : null}
         </ScrollView> : <Text>Loading...</Text>}
